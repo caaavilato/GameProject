@@ -1,0 +1,12 @@
+Sprites.png
+size: 1024, 128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+PlayerStanding
+  rotate: false
+  xy: 0, 0
+  size: 559, 67
+  orig: 559, 67
+  offset: 0, 0
+  index: -1
