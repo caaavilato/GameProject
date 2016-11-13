@@ -65,9 +65,9 @@ public class PlayScreen implements Screen {
             
             camera.position.set(gameport.getWorldWidth() / 2, gameport.getWorldHeight() / 2, 0);
             
-            world = new World(new Vector2(0, -10), true);
             
-            creator = new B2WorldCreator(this);
+            world = new World(AdventureGame.GRAVITY, true);
+            creator = new B2WorldCreator(this);          
             
             b2dr = new Box2DDebugRenderer();
 
@@ -123,18 +123,18 @@ public class PlayScreen implements Screen {
 
       public void handleInput(float dt) {
 
-            if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -4) {
+            if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -AdventureGame.MAX_VELOCITY) {
                   
-                  player.b2body.applyLinearImpulse(new Vector2(-0.1f,0), player.b2body.getWorldCenter(), true);
+                  player.b2body.applyLinearImpulse( AdventureGame.IMPULSE_L, player.b2body.getWorldCenter(), true);
             
             }
-
-            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 4) {
-                  player.b2body.applyLinearImpulse(new Vector2(0.1f,0), player.b2body.getWorldCenter(), true);
+            
+            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= AdventureGame.MAX_VELOCITY) {
+                  player.b2body.applyLinearImpulse(AdventureGame.IMPULSE_R, player.b2body.getWorldCenter(), true);
             }
-
+            
             if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-                  player.b2body.applyLinearImpulse(new Vector2(0,4f), player.b2body.getWorldCenter(), true);
+                  player.b2body.applyLinearImpulse(AdventureGame.JUMP, player.b2body.getWorldCenter(), true);
             }
 
             if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {

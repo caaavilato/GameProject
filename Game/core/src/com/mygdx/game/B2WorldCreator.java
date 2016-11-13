@@ -38,7 +38,7 @@ public class B2WorldCreator {
             FixtureDef fdef = new FixtureDef();
             Body body;
             
-            System.out.println( map );
+            
 
             for (MapObject object : map.getLayers().get("Ground").getObjects().getByType(RectangleMapObject.class) ) {
                   Rectangle rect = ( (RectangleMapObject)  object).getRectangle();
@@ -52,6 +52,7 @@ public class B2WorldCreator {
                   fdef.shape = shape;
                   body.createFixture(fdef);
             }
+            
             
             for(MapObject object : map.getLayers().get("Ground").getObjects().getByType(PolygonMapObject.class)){
                   
