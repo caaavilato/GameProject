@@ -120,6 +120,8 @@ class Player extends Sprite {
       public void getFrame(float dt) {
             
             TextureRegion region;
+            
+            //  Selecting the right frame in the standing loop
             if (TimeState < standing.getAnimationDuration()) {
                   region = standing.getKeyFrame(TimeState);
             } else if (TimeState < (standing.getAnimationDuration() + (6 * standingLoop1.getAnimationDuration()))) {
