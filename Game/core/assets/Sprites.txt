@@ -1,12 +1,40 @@
 Sprites.png
-size: 1024, 128
+size: 512, 512
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-PlayerStanding
+Crawling
+  rotate: false
+  xy: 0, 157
+  size: 411, 42
+  orig: 411, 42
+  offset: 0, 0
+  index: -1
+Jumping
   rotate: false
   xy: 0, 0
-  size: 559, 67
-  orig: 559, 67
+  size: 142, 83
+  orig: 142, 83
+  offset: 0, 0
+  index: -1
+PlayerStanding
+  rotate: false
+  xy: 0, 199
+  size: 503, 69
+  orig: 503, 69
+  offset: 0, 0
+  index: -1
+Running
+  rotate: false
+  xy: 0, 87
+  size: 328, 70
+  orig: 328, 70
+  offset: 0, 0
+  index: -1
+Shooting
+  rotate: false
+  xy: 142, 0
+  size: 167, 87
+  orig: 167, 87
   offset: 0, 0
   index: -1

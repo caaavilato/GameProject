@@ -67,6 +67,9 @@ public class PlayScreen implements Screen {
             
             
             world = new World(AdventureGame.GRAVITY, true);
+            
+            //world.setContactListener(new WorldContactListener());
+            
             creator = new B2WorldCreator(this);          
             
             b2dr = new Box2DDebugRenderer();
@@ -137,8 +140,8 @@ public class PlayScreen implements Screen {
                   player.b2body.applyLinearImpulse(AdventureGame.JUMP, player.b2body.getWorldCenter(), true);
             }
 
-            if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-                  
+            if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+                  Player.currentState = Player.State.SHOOTING; 
             }
 
       }
