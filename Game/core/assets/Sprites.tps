@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.2.3</string>
         <key>fileName</key>
-        <string>C:/Users/Cazmayo/Desktop/Universidad/POO/Proyecto/Game/core/assets/Sprites.tps</string>
+        <string>C:/Users/Cazmayo/Desktop/Universidad/POO/Proyecto/GameProject/GameProject/Game/core/assets/Sprites.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -188,7 +188,11 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">Crawling.png</key>
+            <key type="filename">Jumping.png</key>
             <key type="filename">PlayerStanding.png</key>
+            <key type="filename">Running.png</key>
+            <key type="filename">Shooting.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -197,6 +201,10 @@
         <key>fileList</key>
         <array>
             <filename>PlayerStanding.png</filename>
+            <filename>Running.png</filename>
+            <filename>Shooting.png</filename>
+            <filename>Jumping.png</filename>
+            <filename>Crawling.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
