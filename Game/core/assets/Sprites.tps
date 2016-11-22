@@ -188,10 +188,12 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">Bullet.png</key>
             <key type="filename">Crawling.png</key>
             <key type="filename">Jumping.png</key>
             <key type="filename">PlayerStanding.png</key>
             <key type="filename">Running.png</key>
+            <key type="filename">ShootCrawling.png</key>
             <key type="filename">Shooting.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -205,6 +207,8 @@
             <filename>Shooting.png</filename>
             <filename>Jumping.png</filename>
             <filename>Crawling.png</filename>
+            <filename>Bullet.png</filename>
+            <filename>ShootCrawling.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
