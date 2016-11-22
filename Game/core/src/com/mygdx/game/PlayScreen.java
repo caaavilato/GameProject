@@ -23,6 +23,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
 /**
  *
@@ -32,7 +33,7 @@ public class PlayScreen implements Screen {
 
       private AdventureGame game;
       private TextureAtlas Atlas;
-      
+
       private OrthographicCamera camera;
       private Viewport gameport;
       Texture texture;
@@ -45,33 +46,33 @@ public class PlayScreen implements Screen {
 
       private Box2DDebugRenderer b2dr;
       private B2WorldCreator creator;
-      
+
       private Player player;
-      
-      
-      
+
+      private Array<Bullet> bullets;
+
       public PlayScreen(AdventureGame game) {
 
             Atlas = new TextureAtlas("Sprites.txt");
             this.game = game;
 
             camera = new OrthographicCamera();
+            bullets = new Array<Bullet>();
 
-            gameport = new FitViewport(AdventureGame.V_WIDTH  / AdventureGame.PPM, AdventureGame.V_HEIGHT  / AdventureGame.PPM, camera);
+            gameport = new FitViewport(AdventureGame.V_WIDTH / AdventureGame.PPM, AdventureGame.V_HEIGHT / AdventureGame.PPM, camera);
 
             mapLoader = new TmxMapLoader();
             map = mapLoader.load("Level1_1.tmx");
             renderer = new OrthogonalTiledMapRenderer(map, 1 / AdventureGame.PPM);
-            
+
             camera.position.set(gameport.getWorldWidth() / 2, gameport.getWorldHeight() / 2, 0);
-            
-            
+
             world = new World(AdventureGame.GRAVITY, true);
-            
-            //world.setContactListener(new WorldContactListener());
-            
-            creator = new B2WorldCreator(this);          
-            
+
+            world.setContactListener(new WorldContactListener());
+
+            creator = new B2WorldCreator(this);
+
             b2dr = new Box2DDebugRenderer();
 
             player = new Player(this);
@@ -90,34 +91,41 @@ public class PlayScreen implements Screen {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
             renderer.render();
-            
+
             b2dr.render(world, camera.combined);
-            
+
             game.batch.setProjectionMatrix(camera.combined);
-            
+
             game.batch.begin();
             player.draw(game.batch);
-            
-            
+
+            for (Bullet bullet : bullets) {
+                  bullet.draw(game.batch);
+            }
+
             game.batch.end();
-            
-           
 
       }
 
       public void update(float dt) {
 
             handleInput(dt);
-            
+
             world.step(1 / 60f, 6, 2);
-            
+
             player.update(dt);
-            
-            if(player.b2body.getPosition().x >= gameport.getWorldWidth() / 2)
-               camera.position.x = player.b2body.getPosition().x;
-            else
-                camera.position.x =   gameport.getWorldWidth() / 2;
-            camera.position.y = player.b2body.getPosition().y + (60 / AdventureGame.PPM) ;
+
+            for (Bullet bullet : bullets) {
+                  bullet.update(dt);
+            }
+
+            if (player.b2body.getPosition().x >= gameport.getWorldWidth() / 2) {
+                  camera.position.x = player.b2body.getPosition().x;
+            } else {
+                  camera.position.x = gameport.getWorldWidth() / 2;
+            }
+
+            camera.position.y = player.b2body.getPosition().y + (30 / AdventureGame.PPM);
             camera.update();
 
             renderer.setView(camera);
@@ -125,23 +133,49 @@ public class PlayScreen implements Screen {
       }
 
       public void handleInput(float dt) {
+            if(Gdx.input.isKeyPressed(Input.Keys.DOWN) ||Player.currentState == Player.State.CRAWLSHOT)
+                  Player.crawl = true;
+            if (Player.currentState == Player.State.SHOOTING || Player.currentState == Player.State.CRAWLSHOT) {
+                  return;
+            }
 
-            if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -AdventureGame.MAX_VELOCITY) {
+            if (Player.crawl) {
                   
-                  player.b2body.applyLinearImpulse( AdventureGame.IMPULSE_L, player.b2body.getWorldCenter(), true);
-            
-            }
-            
-            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= AdventureGame.MAX_VELOCITY) {
-                  player.b2body.applyLinearImpulse(AdventureGame.IMPULSE_R, player.b2body.getWorldCenter(), true);
-            }
-            
-            if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-                  player.b2body.applyLinearImpulse(AdventureGame.JUMP, player.b2body.getWorldCenter(), true);
-            }
 
-            if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-                  Player.currentState = Player.State.SHOOTING; 
+                  if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= AdventureGame.MAX_VELOCITY_CRAWLING) {
+                        player.b2body.applyLinearImpulse(AdventureGame.IMPULSE_R, player.b2body.getWorldCenter(), true);
+                        Player.runningRight = true;
+                  }
+
+                  if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -AdventureGame.MAX_VELOCITY_CRAWLING) {
+                        player.b2body.applyLinearImpulse(AdventureGame.IMPULSE_L, player.b2body.getWorldCenter(), true);
+                        Player.runningRight = false;
+                  }
+
+                  if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+                        Player.shot = true;
+                        bullets.add(new Bullet(this, player.b2body.getPosition().x + (player.getWidth() / 2), player.b2body.getPosition().y, Player.runningRight));
+                  }
+
+            } else {
+
+                  if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && Player.inFloor) {
+                        player.b2body.applyLinearImpulse(AdventureGame.JUMP, player.b2body.getWorldCenter(), true);
+                  }
+                  if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= AdventureGame.MAX_VELOCITY) {
+                        player.b2body.applyLinearImpulse(AdventureGame.IMPULSE_R, player.b2body.getWorldCenter(), true);
+                        Player.runningRight = true;
+                  }
+
+                  if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -AdventureGame.MAX_VELOCITY) {
+                        player.b2body.applyLinearImpulse(AdventureGame.IMPULSE_L, player.b2body.getWorldCenter(), true);
+                        Player.runningRight = false;
+                  }
+
+                  if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+                        Player.shot = true;
+                        bullets.add(new Bullet(this, player.b2body.getPosition().x + (player.getWidth() / 2), player.b2body.getPosition().y + 15 / (AdventureGame.PPM * 2), Player.runningRight));
+                  }
             }
 
       }
@@ -183,12 +217,9 @@ public class PlayScreen implements Screen {
       public World getWorld() {
             return world;
       }
-      public TextureAtlas getAtlas(){
+
+      public TextureAtlas getAtlas() {
             return Atlas;
       }
-
-      
-
-     
 
 }
