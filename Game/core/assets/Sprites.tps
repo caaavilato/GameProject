@@ -188,13 +188,20 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">AirEnemy.png</key>
+            <key type="filename">BallAirEnemy.png</key>
             <key type="filename">Bullet.png</key>
+            <key type="filename">Cannon.png</key>
+            <key type="filename">CannonBullet.png</key>
             <key type="filename">Crawling.png</key>
             <key type="filename">Jumping.png</key>
             <key type="filename">PlayerStanding.png</key>
+            <key type="filename">Robot.png</key>
+            <key type="filename">RobotBullet.png</key>
             <key type="filename">Running.png</key>
             <key type="filename">ShootCrawling.png</key>
             <key type="filename">Shooting.png</key>
+            <key type="filename">Wheel.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -209,6 +216,13 @@
             <filename>Crawling.png</filename>
             <filename>Bullet.png</filename>
             <filename>ShootCrawling.png</filename>
+            <filename>Cannon.png</filename>
+            <filename>CannonBullet.png</filename>
+            <filename>AirEnemy.png</filename>
+            <filename>BallAirEnemy.png</filename>
+            <filename>Robot.png</filename>
+            <filename>RobotBullet.png</filename>
+            <filename>Wheel.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

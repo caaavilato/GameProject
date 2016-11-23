@@ -5,6 +5,9 @@
  */
 package com.mygdx.game;
 
+import com.mygdx.game.Sprites.Player.Bullet;
+import com.mygdx.game.Sprites.Player.Player;
+import com.mygdx.game.Sprites.Enemies.Enemy;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -41,6 +44,7 @@ public class PlayScreen implements Screen {
       private TmxMapLoader mapLoader;
       private TiledMap map;
       private OrthogonalTiledMapRenderer renderer;
+      private Hud hud;
 
       private World world;
 
@@ -50,6 +54,7 @@ public class PlayScreen implements Screen {
       private Player player;
 
       private Array<Bullet> bullets;
+      private Array<Enemy> enemies;
 
       public PlayScreen(AdventureGame game) {
 
@@ -60,6 +65,8 @@ public class PlayScreen implements Screen {
             bullets = new Array<Bullet>();
 
             gameport = new FitViewport(AdventureGame.V_WIDTH / AdventureGame.PPM, AdventureGame.V_HEIGHT / AdventureGame.PPM, camera);
+
+            hud = new Hud(1, 1, game.batch);
 
             mapLoader = new TmxMapLoader();
             map = mapLoader.load("Level1_1.tmx");
@@ -72,6 +79,7 @@ public class PlayScreen implements Screen {
             world.setContactListener(new WorldContactListener());
 
             creator = new B2WorldCreator(this);
+            enemies = creator.getEnemies();
 
             b2dr = new Box2DDebugRenderer();
 
@@ -99,11 +107,18 @@ public class PlayScreen implements Screen {
             game.batch.begin();
             player.draw(game.batch);
 
+            for (Enemy enemy : enemies) {
+                  enemy.draw(game.batch);
+
+            }
             for (Bullet bullet : bullets) {
                   bullet.draw(game.batch);
             }
 
             game.batch.end();
+
+            game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+            hud.stage.draw();
 
       }
 
@@ -115,6 +130,10 @@ public class PlayScreen implements Screen {
 
             player.update(dt);
 
+            for (Enemy enemy : creator.getEnemies()) {
+                  enemy.update(dt);
+
+            }
             for (Bullet bullet : bullets) {
                   bullet.update(dt);
             }
@@ -126,6 +145,7 @@ public class PlayScreen implements Screen {
             }
 
             camera.position.y = player.b2body.getPosition().y + (30 / AdventureGame.PPM);
+
             camera.update();
 
             renderer.setView(camera);
@@ -133,14 +153,15 @@ public class PlayScreen implements Screen {
       }
 
       public void handleInput(float dt) {
-            if(Gdx.input.isKeyPressed(Input.Keys.DOWN) ||Player.currentState == Player.State.CRAWLSHOT)
+
+            if (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Player.currentState == Player.State.CRAWLSHOT) {
                   Player.crawl = true;
+            }
             if (Player.currentState == Player.State.SHOOTING || Player.currentState == Player.State.CRAWLSHOT) {
                   return;
             }
 
             if (Player.crawl) {
-                  
 
                   if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= AdventureGame.MAX_VELOCITY_CRAWLING) {
                         player.b2body.applyLinearImpulse(AdventureGame.IMPULSE_R, player.b2body.getWorldCenter(), true);
@@ -222,4 +243,10 @@ public class PlayScreen implements Screen {
             return Atlas;
       }
 
+      public Player getPlayer() {
+            return player;
+      }
+      public void addEnemy( Enemy enemy){
+            enemies.add(enemy);
+      }
 }

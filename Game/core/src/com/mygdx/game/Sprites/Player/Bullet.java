@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mygdx.game;
+package com.mygdx.game.Sprites.Player;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -17,6 +17,9 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.AdventureGame;
+import com.mygdx.game.Hud;
+import com.mygdx.game.PlayScreen;
 
 /**
  *
@@ -70,7 +73,8 @@ public class Bullet extends Sprite {
             
             fdef.filter.maskBits = AdventureGame.GROUND_BIT|
                                    AdventureGame.FLOOR_BIT|
-                                   AdventureGame.PLAYER_BIT;
+                                   AdventureGame.PLAYER_BIT|
+                                   AdventureGame.ENEMY_BIT;
               fdef.shape = shape;
             
             b2body.createFixture(fdef).setUserData(this);
@@ -84,7 +88,8 @@ public class Bullet extends Sprite {
       }
 
       public void update(float dt) {
-
+            
+            setRegion(texture);
             setPosition(b2body.getPosition().x - this.getWidth() / 2, b2body.getPosition().y - this.getHeight() / 2);
             
             if (setToDestroy && !destroyed) {
@@ -105,7 +110,7 @@ public class Bullet extends Sprite {
 
       public void setToDestroy() {
             setToDestroy = true;
-            AdventureGame.manager.get("MetalHit.mp3", Sound.class).play();
+            
             
       }
 

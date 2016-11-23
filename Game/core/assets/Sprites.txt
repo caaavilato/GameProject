@@ -1,8 +1,22 @@
 Sprites.png
-size: 512, 512
+size: 1024, 512
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+AirEnemy
+  rotate: false
+  xy: 0, 290
+  size: 663, 80
+  orig: 663, 80
+  offset: 0, 0
+  index: -1
+BallAirEnemy
+  rotate: false
+  xy: 357, 85
+  size: 166, 59
+  orig: 166, 59
+  offset: 0, 0
+  index: -1
 Bullet
   rotate: false
   xy: 0, 0
@@ -10,45 +24,80 @@ Bullet
   orig: 8, 2
   offset: 0, 0
   index: -1
+Cannon
+  rotate: false
+  xy: 119, 0
+  size: 725, 39
+  orig: 725, 39
+  offset: 0, 0
+  index: -1
+CannonBullet
+  rotate: false
+  xy: 8, 0
+  size: 70, 14
+  orig: 70, 14
+  offset: 0, 0
+  index: -1
 Crawling
   rotate: false
-  xy: 0, 203
+  xy: 0, 39
   size: 411, 42
   orig: 411, 42
   offset: 0, 0
   index: -1
 Jumping
   rotate: false
-  xy: 8, 0
+  xy: 663, 290
   size: 142, 83
   orig: 142, 83
   offset: 0, 0
   index: -1
 PlayerStanding
   rotate: false
-  xy: 0, 245
+  xy: 0, 144
   size: 503, 69
   orig: 503, 69
   offset: 0, 0
   index: -1
+Robot
+  rotate: false
+  xy: 0, 214
+  size: 684, 76
+  orig: 684, 76
+  offset: 0, 0
+  index: -1
+RobotBullet
+  rotate: false
+  xy: 78, 0
+  size: 41, 21
+  orig: 41, 21
+  offset: 0, 0
+  index: -1
 Running
   rotate: false
-  xy: 0, 133
+  xy: 503, 144
   size: 328, 70
   orig: 328, 70
   offset: 0, 0
   index: -1
 ShootCrawling
   rotate: false
-  xy: 0, 87
+  xy: 411, 39
   size: 283, 46
   orig: 283, 46
   offset: 0, 0
   index: -1
 Shooting
   rotate: false
-  xy: 150, 0
+  xy: 805, 290
   size: 167, 87
   orig: 167, 87
+  offset: 0, 0
+  index: -1
+Wheel
+  rotate: false
+  xy: 0, 85
+  size: 357, 50
+  orig: 357, 50
   offset: 0, 0
   index: -1
