@@ -5,17 +5,21 @@
  */
 package com.mygdx.game;
 
+import com.mygdx.game.Sprites.Player.Bullet;
+import com.mygdx.game.Sprites.Player.Player;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.mygdx.game.Sprites.Enemies.Cannon.BulletCannon;
+import com.mygdx.game.Sprites.Enemies.Enemy;
 
 /**
  *
  * @author Camilo.Avila
  */
-class WorldContactListener implements ContactListener {
+public class WorldContactListener implements ContactListener {
 
       private Fixture fixA;
       private Fixture fixB;
@@ -31,18 +35,51 @@ class WorldContactListener implements ContactListener {
 
             switch (cDef) {
 
-                  case AdventureGame.PLAYER_BIT | AdventureGame.STAIRS_BIT:
-                        
-                        break;
-
                   case AdventureGame.BULLET_BIT | AdventureGame.GROUND_BIT:
                   case AdventureGame.BULLET_BIT | AdventureGame.FLOOR_BIT:
-                  case AdventureGame.BULLET_BIT | AdventureGame.PLAYER_BIT:
-                        
+
                         if (fixA.getFilterData().categoryBits == AdventureGame.BULLET_BIT) {
                               ((Bullet) fixA.getUserData()).setToDestroy();
+
                         } else {
                               ((Bullet) fixB.getUserData()).setToDestroy();
+                        }
+                        break;
+
+                  case AdventureGame.BULLET_BIT | AdventureGame.ENEMY_BIT:
+
+                        if (fixA.getFilterData().categoryBits == AdventureGame.BULLET_BIT) {
+                              ((Bullet) fixA.getUserData()).setToDestroy();
+                              ((Enemy) fixB.getUserData()).hitByPlayer();
+
+                        } else {
+                              ((Enemy) fixA.getUserData()).hitByPlayer();
+                              ((Bullet) fixB.getUserData()).setToDestroy();
+                        }
+                        break;
+
+                  case AdventureGame.PLAYER_BIT | AdventureGame.ENEMYBULLET_BIT:
+
+                        if (fixA.getFilterData().categoryBits == AdventureGame.PLAYER_BIT) {
+                              ((Player) fixA.getUserData()).hit();
+                              ((BulletCannon) fixB.getUserData()).hitByPlayer();
+
+                        } else {
+                              ((Enemy) fixA.getUserData()).hitByPlayer();
+                              ((Player) fixB.getUserData()).hit();
+                        }
+                        break;
+
+                  case AdventureGame.PLAYER_BIT | AdventureGame.ENEMY_BIT:
+
+                        System.out.println("hit");
+                        if (fixA.getFilterData().categoryBits == AdventureGame.PLAYER_BIT) {
+
+                              ((Player) fixA.getUserData()).hit();
+
+                        } else {
+
+                              ((Player) fixB.getUserData()).hit();
                         }
                         break;
 
@@ -63,8 +100,6 @@ class WorldContactListener implements ContactListener {
                         Player.inFloor = false;
                         break;
 
-                 
-
             }
       }
 
@@ -81,19 +116,6 @@ class WorldContactListener implements ContactListener {
                   case AdventureGame.FLOOR_BIT | AdventureGame.PLAYER_BIT:
                         Player.inFloor = true;
                         break;
-                        
-                  case AdventureGame.BULLET_BIT | AdventureGame.GROUND_BIT:
-                  case AdventureGame.BULLET_BIT | AdventureGame.FLOOR_BIT:
-                        
-                        if (fixA.getFilterData().categoryBits == AdventureGame.BULLET_BIT) {
-                              ((Bullet) fixA.getUserData()).setToDestroy();
-                        } else {
-                              ((Bullet) fixB.getUserData()).setToDestroy();
-                        }
-                        break; 
-                        
-                        
-                  
 
             }
       }

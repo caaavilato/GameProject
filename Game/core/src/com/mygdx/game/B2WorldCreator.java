@@ -5,6 +5,7 @@
  */
 package com.mygdx.game;
 
+import com.mygdx.game.Sprites.Enemies.Cannon.Cannon;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -19,6 +20,8 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import static com.badlogic.gdx.physics.box2d.Shape.Type.Polygon;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.Sprites.Enemies.Enemy;
 
 /**
  *
@@ -28,32 +31,26 @@ public class B2WorldCreator {
 
       World world;
       TiledMap map;
+      
+      private Array<Enemy> enemies;
 
       public B2WorldCreator(PlayScreen screen) {
 
             world = screen.getWorld();
             map = screen.getMap();
+            enemies = new Array<Enemy>();
 
             BodyDef bdef = new BodyDef();
             PolygonShape shape = new PolygonShape();
             FixtureDef fdef = new FixtureDef();
             Body body;
             
-             for (MapObject object : map.getLayers().get("Stairs").getObjects().getByType(RectangleMapObject.class)) {
+            for (MapObject object : map.getLayers().get("Cannon").getObjects().getByType(RectangleMapObject.class)) {
                   Rectangle rect = ((RectangleMapObject) object).getRectangle();
+                  enemies.add( new Cannon(screen, ( rect.getX() + rect.getWidth() / 2 )/AdventureGame.PPM, (rect.getY() + rect.getHeight()/2 )/AdventureGame.PPM  )  );
 
-                  bdef.type = BodyDef.BodyType.KinematicBody;
-                  bdef.position.set((rect.getX() + rect.getWidth() / 2) / AdventureGame.PPM, (rect.getY() + rect.getHeight() / 2) / AdventureGame.PPM);
-
-                  body = world.createBody(bdef);
-
-                  shape.setAsBox((rect.getWidth() / 2) / AdventureGame.PPM, (rect.getHeight() / 2) / AdventureGame.PPM);
-                  fdef.shape = shape;
-                  fdef.isSensor = true;
-                  fdef.filter.categoryBits = AdventureGame.STAIRS_BIT;
-                  body.createFixture(fdef);
-            }
-            
+                          }
+                         
             for (MapObject object : map.getLayers().get("Ground").getObjects().getByType(RectangleMapObject.class)) {
                   Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
@@ -104,7 +101,7 @@ public class B2WorldCreator {
                         vert[i] /= AdventureGame.PPM;
                   }
 
-                  System.out.println(vert[1] + "__" + vert[2] + "__" + vert[3]);
+                  
                   shape.set(vert);
                   fdef.shape = shape;
                   fdef.filter.categoryBits = AdventureGame.FLOOR_BIT;
@@ -114,7 +111,11 @@ public class B2WorldCreator {
                   body.createFixture(fdef);
 
             }
-
+            
+      }
+      
+      public Array<Enemy> getEnemies(){
+            return enemies;
       }
 
 }

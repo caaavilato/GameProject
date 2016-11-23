@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class AdventureGame extends Game {
-      // Starting WIDTH,  WEIGHT and PPM
+      
 
       public static final int V_WIDTH = 300  ;
       public static final int V_HEIGHT = 150 ;
@@ -31,6 +31,8 @@ public class AdventureGame extends Game {
       public static final short PLAYER_BIT = 4;
       public static final short STAIRS_BIT = 8;
       public static final short BULLET_BIT = 32;
+      public static final short ENEMY_BIT = 64;
+      public static final short ENEMYBULLET_BIT = 128;
 
       public SpriteBatch batch;
       public static AssetManager manager;

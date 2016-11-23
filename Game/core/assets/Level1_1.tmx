@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="112" height="23" tilewidth="32" tileheight="32" nextobjectid="59">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="112" height="23" tilewidth="32" tileheight="32" nextobjectid="66">
  <tileset firstgid="1" name="imagen11" tilewidth="32" tileheight="32" tilecount="2576" columns="112">
   <image source="imagen11.png" width="3586" height="766"/>
  </tileset>
@@ -40,7 +40,8 @@
   <object id="54" x="0" y="376" width="8" height="336"/>
   <object id="55" x="3520" y="8" width="8" height="200"/>
  </objectgroup>
- <objectgroup name="Stairs">
-  <object id="57" x="296" y="584" width="24" height="96"/>
+ <objectgroup name="Cannon">
+  <object id="62" x="1280" y="515" width="47" height="28"/>
+  <object id="65" x="2496" y="274" width="47" height="28"/>
  </objectgroup>
 </map>
