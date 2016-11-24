@@ -384,7 +384,8 @@ public class Player extends Sprite {
             fdef.filter.maskBits = AdventureGame.FLOOR_BIT
                                   |AdventureGame.GROUND_BIT
                                   |AdventureGame.BULLET_BIT
-                                  |AdventureGame.ENEMYBULLET_BIT;
+                                  |AdventureGame.ENEMYBULLET_BIT
+                    |AdventureGame.ENEMYRANGE_BIT;
 
             fdef.friction = 1f;
             b2body.createFixture(fdef).setUserData(this);
@@ -417,7 +418,8 @@ public class Player extends Sprite {
             fdef.filter.maskBits = AdventureGame.FLOOR_BIT
                     | AdventureGame.GROUND_BIT
                     |AdventureGame.ENEMY_BIT
-                    |AdventureGame.ENEMYBULLET_BIT;
+                    |AdventureGame.ENEMYBULLET_BIT
+                    |AdventureGame.ENEMYRANGE_BIT;
 
             fdef.friction = 1f;
             b2body.createFixture(fdef).setUserData(this);
@@ -449,7 +451,8 @@ public class Player extends Sprite {
             fdef.filter.maskBits = AdventureGame.FLOOR_BIT
                                    | AdventureGame.GROUND_BIT
                                    | AdventureGame.ENEMY_BIT
-                                   | AdventureGame.ENEMYBULLET_BIT;
+                                   | AdventureGame.ENEMYBULLET_BIT
+                    |AdventureGame.ENEMYRANGE_BIT;
 
             fdef.friction = 2f;
             b2body.createFixture(fdef).setUserData(this);

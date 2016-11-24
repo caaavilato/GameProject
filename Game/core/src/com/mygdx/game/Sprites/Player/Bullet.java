@@ -88,11 +88,12 @@ public class Bullet extends Sprite {
       }
 
       public void update(float dt) {
-            
+            System.out.println("update");
             setRegion(texture);
             setPosition(b2body.getPosition().x - this.getWidth() / 2, b2body.getPosition().y - this.getHeight() / 2);
             
             if (setToDestroy && !destroyed) {
+                  screen.deleteBullet(this);
                   world.destroyBody(b2body);
                   destroyed = true;
             }

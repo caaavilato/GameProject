@@ -27,6 +27,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.Sprites.Enemies.AirEnemy.AirEnemy;
+import com.mygdx.game.Sprites.Enemies.Robot.Robot;
 
 /**
  *
@@ -84,6 +86,9 @@ public class PlayScreen implements Screen {
             b2dr = new Box2DDebugRenderer();
 
             player = new Player(this);
+            
+            enemies.add(new AirEnemy(this,1000/AdventureGame.PPM, 150/AdventureGame.PPM  ));
+            enemies.add(new Robot(this, 2, 1) );
 
       }
 
@@ -131,8 +136,10 @@ public class PlayScreen implements Screen {
             player.update(dt);
 
             for (Enemy enemy : creator.getEnemies()) {
+                                   
+                  if(enemy.getX() < 0)
+                        enemy.setDestroy();
                   enemy.update(dt);
-
             }
             for (Bullet bullet : bullets) {
                   bullet.update(dt);
@@ -249,4 +256,12 @@ public class PlayScreen implements Screen {
       public void addEnemy( Enemy enemy){
             enemies.add(enemy);
       }
+      public void deleteEnemy(Enemy enemy){
+            enemies.removeValue(enemy, false);
+      }
+      public void deleteBullet(Bullet bullet){
+            bullets.removeValue(bullet, false);
+            
+      }
+ 
 }

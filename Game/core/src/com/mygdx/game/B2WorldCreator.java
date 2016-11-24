@@ -63,7 +63,9 @@ public class B2WorldCreator {
                   fdef.shape = shape;
                   fdef.filter.categoryBits = AdventureGame.GROUND_BIT;
                   fdef.filter.maskBits = AdventureGame.BULLET_BIT|
-                                          AdventureGame.PLAYER_BIT;
+                                          AdventureGame.PLAYER_BIT|
+                                          AdventureGame.ENEMYBULLET_BIT|
+                                          AdventureGame.ENEMY_BIT;
                   fdef.isSensor = false;
                   body.createFixture(fdef);
             }
@@ -81,7 +83,9 @@ public class B2WorldCreator {
                   floorShape.set(0, 0, rect.getWidth() / AdventureGame.PPM, 0);
                   fdef.filter.categoryBits = AdventureGame.FLOOR_BIT;
                   fdef.filter.maskBits = AdventureGame.BULLET_BIT|
-                                          AdventureGame.PLAYER_BIT;
+                                         AdventureGame.PLAYER_BIT|
+                                         AdventureGame.ENEMYBULLET_BIT|
+                                         AdventureGame.ENEMY_BIT;
                   fdef.shape = floorShape;
                   body.createFixture(fdef);
             }

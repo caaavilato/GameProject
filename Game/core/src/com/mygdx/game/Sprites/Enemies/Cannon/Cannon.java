@@ -111,4 +111,9 @@ public class Cannon extends Enemy {
             
       }
 
+      @Override
+      public void inRange() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      }
+
 }
