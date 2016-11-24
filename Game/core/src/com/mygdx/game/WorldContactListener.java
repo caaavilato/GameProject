@@ -62,17 +62,30 @@ public class WorldContactListener implements ContactListener {
 
                         if (fixA.getFilterData().categoryBits == AdventureGame.PLAYER_BIT) {
                               ((Player) fixA.getUserData()).hit();
-                              ((BulletCannon) fixB.getUserData()).hitByPlayer();
+                              ((Enemy) fixB.getUserData()).hitByPlayer();
 
                         } else {
                               ((Enemy) fixA.getUserData()).hitByPlayer();
                               ((Player) fixB.getUserData()).hit();
                         }
                         break;
+                        
+                   case AdventureGame.FLOOR_BIT | AdventureGame.ENEMYBULLET_BIT:
+                   case AdventureGame.GROUND_BIT | AdventureGame.ENEMYBULLET_BIT:
+                   
+                         System.out.println("hit");
+                        if (fixA.getFilterData().categoryBits == AdventureGame.ENEMYBULLET_BIT) {
+                              
+                              ((Enemy) fixA.getUserData()).setDestroy();
+
+                        } else {
+                              ((Enemy) fixB.getUserData()).setDestroy();
+                        }
+                        break;
 
                   case AdventureGame.PLAYER_BIT | AdventureGame.ENEMY_BIT:
 
-                        System.out.println("hit");
+                        
                         if (fixA.getFilterData().categoryBits == AdventureGame.PLAYER_BIT) {
 
                               ((Player) fixA.getUserData()).hit();
@@ -80,6 +93,19 @@ public class WorldContactListener implements ContactListener {
                         } else {
 
                               ((Player) fixB.getUserData()).hit();
+                        }
+                        break;
+                        
+                  case AdventureGame.PLAYER_BIT | AdventureGame.ENEMYRANGE_BIT:
+
+                        
+                        if (fixA.getFilterData().categoryBits == AdventureGame.PLAYER_BIT) {
+
+                              ((Enemy) fixB.getUserData()).inRange();
+
+                        } else {
+
+                              ((Enemy) fixB.getUserData()).inRange();
                         }
                         break;
 

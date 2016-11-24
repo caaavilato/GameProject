@@ -30,6 +30,10 @@ public abstract class Enemy extends Sprite {
             this.screen = screen;
             setPosition(x, y);
             defineEnemy();
+            
+            
+            setDestroy = false;
+            destroyed = false;
 
             b2body.setActive(true);
 
@@ -40,11 +44,18 @@ public abstract class Enemy extends Sprite {
             super.draw(batch);
 
       }
+      public void setDestroy(){
+            setDestroy = true;
+      }
+     
 
       protected abstract void defineEnemy();
 
       public abstract void update(float dt);
 
       public abstract void hitByPlayer();
+      
+      public abstract void inRange();
+      
 
 }

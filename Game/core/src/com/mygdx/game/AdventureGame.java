@@ -30,8 +30,9 @@ public class AdventureGame extends Game {
       public static final short FLOOR_BIT = 2;
       public static final short PLAYER_BIT = 4;
       public static final short STAIRS_BIT = 8;
-      public static final short BULLET_BIT = 32;
-      public static final short ENEMY_BIT = 64;
+      public static final short BULLET_BIT = 16;
+      public static final short ENEMY_BIT = 32;
+      public static final short ENEMYRANGE_BIT = 64;
       public static final short ENEMYBULLET_BIT = 128;
 
       public SpriteBatch batch;
