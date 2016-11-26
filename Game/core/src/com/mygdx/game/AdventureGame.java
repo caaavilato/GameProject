@@ -5,6 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,6 +22,7 @@ public class AdventureGame extends Game {
       public static final Vector2 GRAVITY = new Vector2(0, -10);
       public static final Vector2 IMPULSE_R = new Vector2(0.1f, 0.05f);
       public static final Vector2 IMPULSE_L = new Vector2(-0.1f, 0.05f);
+      public static final Vector2 IMPULSE_H = new Vector2(0, 2.5f);
       public static final Vector2 JUMP = new Vector2 (0, 3f);
       public static final float MAX_VELOCITY  = 2;
       public static final float MAX_VELOCITY_CRAWLING  = 1;
@@ -34,6 +36,8 @@ public class AdventureGame extends Game {
       public static final short ENEMY_BIT = 32;
       public static final short ENEMYRANGE_BIT = 64;
       public static final short ENEMYBULLET_BIT = 128;
+      public static final short DYNAMITE_BIT = 256;
+      public static final short EXPLOSION_BIT = 512;
 
       public SpriteBatch batch;
       public static AssetManager manager;
@@ -43,7 +47,9 @@ public class AdventureGame extends Game {
             batch = new SpriteBatch();
             manager = new AssetManager();
             manager.load("GunSound.mp3", Sound.class);
-            manager.load("MetalHit.mp3", Sound.class);
+            manager.load("Hit Sound Effect.mp3", Sound.class);
+            manager.load("Dynamite.mp3", Sound.class);
+            manager.load("Sonic2.mp3", Music.class);
             
             manager.finishLoading();
             setScreen(new PlayScreen(this));

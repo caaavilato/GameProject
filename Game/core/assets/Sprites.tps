@@ -194,6 +194,8 @@
             <key type="filename">Cannon.png</key>
             <key type="filename">CannonBullet.png</key>
             <key type="filename">Crawling.png</key>
+            <key type="filename">Dynamite.png</key>
+            <key type="filename">Holding.png</key>
             <key type="filename">Jumping.png</key>
             <key type="filename">PlayerStanding.png</key>
             <key type="filename">Robot.png</key>
@@ -223,6 +225,8 @@
             <filename>Robot.png</filename>
             <filename>RobotBullet.png</filename>
             <filename>Wheel.png</filename>
+            <filename>Holding.png</filename>
+            <filename>Dynamite.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

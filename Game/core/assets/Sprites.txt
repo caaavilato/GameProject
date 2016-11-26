@@ -5,14 +5,14 @@ filter: Linear,Linear
 repeat: none
 AirEnemy
   rotate: false
-  xy: 0, 290
+  xy: 0, 283
   size: 663, 80
   orig: 663, 80
   offset: 0, 0
   index: -1
 BallAirEnemy
   rotate: false
-  xy: 357, 85
+  xy: 294, 0
   size: 166, 59
   orig: 166, 59
   offset: 0, 0
@@ -26,77 +26,98 @@ Bullet
   index: -1
 Cannon
   rotate: false
-  xy: 119, 0
+  xy: 0, 439
   size: 725, 39
   orig: 725, 39
   offset: 0, 0
   index: -1
 CannonBullet
   rotate: false
-  xy: 8, 0
+  xy: 82, 0
   size: 70, 14
   orig: 70, 14
   offset: 0, 0
   index: -1
 Crawling
   rotate: false
-  xy: 0, 39
+  xy: 357, 164
   size: 411, 42
   orig: 411, 42
   offset: 0, 0
   index: -1
+Dynamite
+  rotate: false
+  xy: 627, 0
+  size: 263, 70
+  orig: 263, 70
+  offset: 0, 0
+  index: -1
+Hit
+  rotate: false
+  xy: 8, 0
+  size: 33, 55
+  orig: 33, 55
+  offset: 0, 0
+  index: -1
+Holding
+  rotate: false
+  xy: 283, 87
+  size: 283, 77
+  orig: 283, 77
+  offset: 0, 0
+  index: -1
 Jumping
   rotate: false
-  xy: 663, 290
+  xy: 152, 0
   size: 142, 83
   orig: 142, 83
   offset: 0, 0
   index: -1
 PlayerStanding
   rotate: false
-  xy: 0, 144
+  xy: 0, 214
   size: 503, 69
   orig: 503, 69
   offset: 0, 0
   index: -1
 Robot
   rotate: false
-  xy: 0, 214
+  xy: 0, 363
   size: 684, 76
   orig: 684, 76
   offset: 0, 0
   index: -1
 RobotBullet
   rotate: false
-  xy: 78, 0
+  xy: 41, 0
   size: 41, 21
   orig: 41, 21
   offset: 0, 0
   index: -1
 Running
   rotate: false
-  xy: 503, 144
+  xy: 566, 87
   size: 328, 70
   orig: 328, 70
   offset: 0, 0
   index: -1
 ShootCrawling
   rotate: false
-  xy: 411, 39
+  xy: 0, 87
   size: 283, 46
   orig: 283, 46
   offset: 0, 0
   index: -1
 Shooting
   rotate: false
-  xy: 805, 290
+  xy: 460, 0
   size: 167, 87
   orig: 167, 87
   offset: 0, 0
   index: -1
 Wheel
   rotate: false
-  xy: 0, 85
+  xy: 0, 164
   size: 357, 50
   orig: 357, 50
   offset: 0, 0

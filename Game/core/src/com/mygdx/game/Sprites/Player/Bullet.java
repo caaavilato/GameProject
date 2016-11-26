@@ -52,6 +52,7 @@ public class Bullet extends Sprite {
 
             defineBullet();
             AdventureGame.manager.get("GunSound.mp3", Sound.class).play();
+            
 
       }
 

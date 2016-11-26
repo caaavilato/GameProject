@@ -71,7 +71,9 @@ public class Robot extends Enemy {
         fdef.filter.categoryBits = AdventureGame.ENEMY_BIT;
 
         fdef.filter.maskBits = AdventureGame.BULLET_BIT
-                | AdventureGame.PLAYER_BIT;
+                | AdventureGame.PLAYER_BIT
+                |AdventureGame.DYNAMITE_BIT
+                |AdventureGame.EXPLOSION_BIT;
 
         b2body.createFixture(fdef).setUserData(this);
 
@@ -138,6 +140,12 @@ public class Robot extends Enemy {
       @Override
       public void inRange() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      }
+      @Override
+      public void hitByExplosion() {
+           lives = lives - 2;
+           if(lives <= 0)
+                 setDestroy = true;
       }
 
 }

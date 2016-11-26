@@ -7,6 +7,7 @@ package com.mygdx.game.Sprites.Player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -31,13 +32,15 @@ import com.mygdx.game.PlayScreen;
 public class Player extends Sprite {
 
       public static enum State {
-            FALLING, JUMPING, STANDING, RUNNING, SHOOTING, DEAD, CRAWLING, CRAWLINGMOVING, CRAWLSHOT, DYNAMITE;
+            FALLING, JUMPING, STANDING, RUNNING, SHOOTING, DEAD, CRAWLING, CRAWLINGMOVING, CRAWLSHOT, DYNAMITE, HIT;
       };
       public static State currentState;
       public static State previousState;
       public static boolean inFloor;
       public static boolean crawl;
       public static boolean shot;
+      public static boolean hold;
+      public static boolean hit;
 
       private PlayScreen screen;
 
@@ -58,10 +61,13 @@ public class Player extends Sprite {
       private Animation crawlshot;
       private Animation jumping;
       private Animation falling;
+      private Animation holding;
+      private Animation hitting;
 
       private float TimeState = 0;
       private boolean playerStand;
-      
+      private boolean Tothrow;
+
       public static boolean runningRight;
       private Vector2 dimension;
 
@@ -89,6 +95,8 @@ public class Player extends Sprite {
             runningRight = true;
             crawl = false;
             shot = false;
+            hold = false;
+            hit = false;
 
             standingAnimation();
             runningAnimation();
@@ -97,8 +105,11 @@ public class Player extends Sprite {
             crawlingmovingAnimation();
             crawlshotAnimation();
             jumpingAnimation();
+            holdAnimation();
+            hitAnimation();
 
             inFloor = true;
+            Tothrow = true;
 
       }
 
@@ -215,6 +226,25 @@ public class Player extends Sprite {
             frames.clear();
       }
 
+      private void holdAnimation() {
+            for (int i = 0; i <= 6; i++) {
+                  frame = new TextureRegion(screen.getAtlas().findRegion("Holding"), (i * 36), 0, 36, 61);
+                  frames.add(frame);
+
+            }
+
+            holding = new Animation(0.08f, frames);
+            frames.clear();
+      }
+
+      private void hitAnimation() {
+
+            frame = new TextureRegion(screen.getAtlas().findRegion("Hit"), 0, 0, 30, 55);
+            frames.add(frame);
+            hitting = new Animation(0.7f, frames);
+            frames.clear();
+      }
+
       public void render() {
 
       }
@@ -226,7 +256,7 @@ public class Player extends Sprite {
       }
 
       public void update(float dt) {
-            
+
             getFrame(dt);
 
             setPosition(b2body.getPosition().x - dimension.x, b2body.getPosition().y - dimension.y);
@@ -236,9 +266,10 @@ public class Player extends Sprite {
             } else if (!crawl && !playerStand) {
                   definePlayerStand();
             }
-            
+
             crawl = false;
             shot = false;
+            hold = false;
 
       }
 
@@ -294,6 +325,23 @@ public class Player extends Sprite {
                         region = jumping.getKeyFrame(TimeState);
 
                         break;
+
+                  case HIT:
+                        region = hitting.getKeyFrame(TimeState);
+                        if (hitting.isAnimationFinished(TimeState) && previousState == State.HIT) {
+                              hit = false;
+                        }
+
+                        break;
+                  case DYNAMITE:
+                        region = holding.getKeyFrame(TimeState);
+
+                        if (holding.getKeyFrameIndex(TimeState) == 5 && Tothrow && previousState == State.DYNAMITE) {
+                              screen.addDynamite(new Dynamite(screen, b2body.getPosition().x + (this.getWidth() / 2), b2body.getPosition().y + 15 / (AdventureGame.PPM * 2), runningRight));
+                              Tothrow = false;
+                        }
+
+                        break;
                   case FALLING:
                         region = falling.getKeyFrame(TimeState);
 
@@ -316,7 +364,9 @@ public class Player extends Sprite {
             setRegion(region);
 
             if (currentState != previousState) {
+
                   TimeState = 0;
+                  Tothrow = true;
             } else {
                   TimeState += dt;
             }
@@ -328,6 +378,10 @@ public class Player extends Sprite {
       }
 
       private State getState() {
+            
+            if (hit) {
+                  return State.HIT;
+            }
 
             if (currentState == State.SHOOTING) {
                   if (TimeState <= shooting.getAnimationDuration() + 0.2f) {
@@ -343,6 +397,20 @@ public class Player extends Sprite {
                   }
             }
 
+            if (currentState == State.DYNAMITE) {
+                  if (TimeState <= holding.getAnimationDuration() + 0.2f) {
+
+                        return previousState;
+                  }
+            }
+            if (currentState == State.HIT) {
+                  if (TimeState <= hitting.getAnimationDuration() + 0.2f) {
+
+                        return previousState;
+                  }
+            }
+
+            
             if (crawl) {
                   if (shot) {
                         return State.CRAWLSHOT;
@@ -353,12 +421,17 @@ public class Player extends Sprite {
                   }
             } else if (shot) {
                   return State.SHOOTING;
-            } else if (  (b2body.getLinearVelocity().y > 0 && !inFloor)  ) {
+            } else if ((b2body.getLinearVelocity().y > 0 && !inFloor)) {
                   return State.JUMPING;
             } else if (b2body.getLinearVelocity().y < 0 && !inFloor) {
                   return State.FALLING;
             } else if (b2body.getLinearVelocity().x != 0) {
                   return State.RUNNING;
+            } else if (hold) {
+                  return State.DYNAMITE;
+            } else if (hit) {
+                  return State.HIT;
+
             } else {
                   return State.STANDING;
             }
@@ -382,17 +455,17 @@ public class Player extends Sprite {
             fdef.shape = shape;
             fdef.filter.categoryBits = AdventureGame.PLAYER_BIT;
             fdef.filter.maskBits = AdventureGame.FLOOR_BIT
-                                  |AdventureGame.GROUND_BIT
-                                  |AdventureGame.BULLET_BIT
-                                  |AdventureGame.ENEMYBULLET_BIT
-                    |AdventureGame.ENEMYRANGE_BIT;
+                    | AdventureGame.GROUND_BIT
+                    | AdventureGame.BULLET_BIT
+                    | AdventureGame.ENEMY_BIT
+                    | AdventureGame.ENEMYBULLET_BIT
+                    | AdventureGame.ENEMYRANGE_BIT;
 
             fdef.friction = 1f;
             b2body.createFixture(fdef).setUserData(this);
 
             shape.getVertex(2, dimension);
 
-            
             playerStand = true;
 
       }
@@ -417,13 +490,13 @@ public class Player extends Sprite {
             fdef.filter.categoryBits = AdventureGame.PLAYER_BIT;
             fdef.filter.maskBits = AdventureGame.FLOOR_BIT
                     | AdventureGame.GROUND_BIT
-                    |AdventureGame.ENEMY_BIT
-                    |AdventureGame.ENEMYBULLET_BIT
-                    |AdventureGame.ENEMYRANGE_BIT;
+                    | AdventureGame.ENEMY_BIT
+                    | AdventureGame.ENEMYBULLET_BIT
+                    | AdventureGame.ENEMYRANGE_BIT;
 
             fdef.friction = 1f;
             b2body.createFixture(fdef).setUserData(this);
-  
+
             playerStand = true;
 
       }
@@ -447,31 +520,37 @@ public class Player extends Sprite {
 
             fdef.shape = shape;
             fdef.filter.categoryBits = AdventureGame.PLAYER_BIT;
-            
+
             fdef.filter.maskBits = AdventureGame.FLOOR_BIT
-                                   | AdventureGame.GROUND_BIT
-                                   | AdventureGame.ENEMY_BIT
-                                   | AdventureGame.ENEMYBULLET_BIT
-                    |AdventureGame.ENEMYRANGE_BIT;
+                    | AdventureGame.GROUND_BIT
+                    | AdventureGame.ENEMY_BIT
+                    | AdventureGame.ENEMYBULLET_BIT
+                    | AdventureGame.ENEMYRANGE_BIT;
 
             fdef.friction = 2f;
             b2body.createFixture(fdef).setUserData(this);
 
             shape.getVertex(2, dimension);
 
-          
             playerStand = false;
       }
 
       public float getTimeState() {
             return this.TimeState;
       }
-      
-      public  void hit(){
+
+      public void hit() {
+
+            System.out.println(inFloor);
+            if (inFloor) {
+                  b2body.applyLinearImpulse(AdventureGame.IMPULSE_H, b2body.getWorldCenter(), true);
+            }
+
+            hit = true;
+            AdventureGame.manager.get("Hit Sound Effect.mp3", Sound.class).play(2, 1,0);
+            
+            
             Hud.hit();
       }
-      
-      
-
 
 }
