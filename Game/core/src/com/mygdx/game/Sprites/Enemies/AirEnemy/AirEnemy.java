@@ -91,7 +91,8 @@ public class AirEnemy extends Enemy {
 
             fdef.filter.maskBits = AdventureGame.GROUND_BIT
                     | AdventureGame.FLOOR_BIT
-                    | AdventureGame.PLAYER_BIT;
+                    | AdventureGame.PLAYER_BIT
+                    |AdventureGame.DYNAMITE_BIT;
             fdef.shape = shape;
 
             b2body.createFixture(fdef).setUserData(this);
@@ -151,6 +152,13 @@ public class AirEnemy extends Enemy {
                   drop = true;
                   TimeState = 0;
             }
+      }
+
+      @Override
+      public void hitByExplosion() {
+           lives = lives - 2;
+           if(lives <= 0)
+                 setDestroy = true;
       }
 
 }

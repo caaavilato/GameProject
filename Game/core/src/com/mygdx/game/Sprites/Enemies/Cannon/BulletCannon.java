@@ -46,7 +46,7 @@ public class BulletCannon extends Enemy {
             animation = new Animation(0.1f, frames, PlayMode.LOOP);
             frames.clear();
 
-            System.out.println(animation.getAnimationDuration());
+            
 
             setBounds(x, y, 15 / AdventureGame.PPM, 9 / AdventureGame.PPM);
             this.fireLeft = fireLeft;
@@ -82,14 +82,15 @@ public class BulletCannon extends Enemy {
 
             fdef.filter.maskBits = AdventureGame.GROUND_BIT|
                                   AdventureGame.FLOOR_BIT|
-                                  AdventureGame.PLAYER_BIT;
+                                  AdventureGame.PLAYER_BIT|
+                    AdventureGame.DYNAMITE_BIT;
             fdef.shape = shape;
 
             b2body.createFixture(fdef).setUserData(this);
 
             b2body.setGravityScale(0);
 
-            System.out.println(fireLeft);
+           
 
       }
 
@@ -124,6 +125,10 @@ public class BulletCannon extends Enemy {
       @Override
       public void inRange() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      }
+      @Override
+      public void hitByExplosion() {
+           setDestroy = true;
       }
 
 }

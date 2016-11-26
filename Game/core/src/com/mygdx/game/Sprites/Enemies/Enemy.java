@@ -54,6 +54,7 @@ public abstract class Enemy extends Sprite {
       public abstract void update(float dt);
 
       public abstract void hitByPlayer();
+      public abstract void hitByExplosion();
       
       public abstract void inRange();
       

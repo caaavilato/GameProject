@@ -12,6 +12,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -29,6 +30,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Sprites.Enemies.AirEnemy.AirEnemy;
 import com.mygdx.game.Sprites.Enemies.Robot.Robot;
+import com.mygdx.game.Sprites.Player.Dynamite;
 
 /**
  *
@@ -57,6 +59,7 @@ public class PlayScreen implements Screen {
 
       private Array<Bullet> bullets;
       private Array<Enemy> enemies;
+      private Array<Dynamite> dynamites;
 
       public PlayScreen(AdventureGame game) {
 
@@ -65,6 +68,7 @@ public class PlayScreen implements Screen {
 
             camera = new OrthographicCamera();
             bullets = new Array<Bullet>();
+            dynamites = new Array<Dynamite>();
 
             gameport = new FitViewport(AdventureGame.V_WIDTH / AdventureGame.PPM, AdventureGame.V_HEIGHT / AdventureGame.PPM, camera);
 
@@ -86,9 +90,9 @@ public class PlayScreen implements Screen {
             b2dr = new Box2DDebugRenderer();
 
             player = new Player(this);
-            
-            enemies.add(new AirEnemy(this,1000/AdventureGame.PPM, 150/AdventureGame.PPM  ));
-            enemies.add(new Robot(this, 2, 1) );
+
+            enemies.add(new AirEnemy(this, 1000 / AdventureGame.PPM, 150 / AdventureGame.PPM));
+            enemies.add(new Robot(this, 2, 1));
 
       }
 
@@ -110,7 +114,7 @@ public class PlayScreen implements Screen {
             game.batch.setProjectionMatrix(camera.combined);
 
             game.batch.begin();
-            player.draw(game.batch);
+            
 
             for (Enemy enemy : enemies) {
                   enemy.draw(game.batch);
@@ -119,12 +123,23 @@ public class PlayScreen implements Screen {
             for (Bullet bullet : bullets) {
                   bullet.draw(game.batch);
             }
+            for (Dynamite dynamite : dynamites) {
+                  dynamite.draw(game.batch);
+
+            }
+            player.draw(game.batch);
 
             game.batch.end();
 
             game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
             hud.stage.draw();
+            
+            
+            AdventureGame.manager.get("Sonic2.mp3", Music.class).setLooping(true);
+            
+            AdventureGame.manager.get("Sonic2.mp3", Music.class).play();
 
+            AdventureGame.manager.get("Sonic2.mp3", Music.class).setVolume(0.5f);
       }
 
       public void update(float dt) {
@@ -133,17 +148,24 @@ public class PlayScreen implements Screen {
 
             world.step(1 / 60f, 6, 2);
 
-            player.update(dt);
+           player.update(dt);
 
             for (Enemy enemy : creator.getEnemies()) {
-                                   
-                  if(enemy.getX() < 0)
+
+                  if (enemy.getX() < 0) {
                         enemy.setDestroy();
+                  }
                   enemy.update(dt);
             }
             for (Bullet bullet : bullets) {
                   bullet.update(dt);
             }
+            for (Dynamite dynamite : dynamites) {
+                  dynamite.update(dt);
+
+            }
+            
+             
 
             if (player.b2body.getPosition().x >= gameport.getWorldWidth() / 2) {
                   camera.position.x = player.b2body.getPosition().x;
@@ -160,13 +182,26 @@ public class PlayScreen implements Screen {
       }
 
       public void handleInput(float dt) {
-
-            if (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Player.currentState == Player.State.CRAWLSHOT) {
-                  Player.crawl = true;
-            }
-            if (Player.currentState == Player.State.SHOOTING || Player.currentState == Player.State.CRAWLSHOT) {
+            if (Player.currentState == Player.State.HIT) {
+                  
                   return;
             }
+            if(Player.currentState == Player.State.CRAWLSHOT){
+                  Player.crawl = true;
+                  return;
+            }
+            if (Player.currentState == Player.State.SHOOTING ) {
+                  return;
+            }
+            if (Player.currentState == Player.State.DYNAMITE) {
+                  return;
+            }
+            
+            
+            if (Gdx.input.isKeyPressed(Input.Keys.DOWN) ) {
+                  Player.crawl = true;
+            }
+            
 
             if (Player.crawl) {
 
@@ -204,6 +239,11 @@ public class PlayScreen implements Screen {
                         Player.shot = true;
                         bullets.add(new Bullet(this, player.b2body.getPosition().x + (player.getWidth() / 2), player.b2body.getPosition().y + 15 / (AdventureGame.PPM * 2), Player.runningRight));
                   }
+                  if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+                        Player.hold = true;
+
+                  }
+                  
             }
 
       }
@@ -253,15 +293,27 @@ public class PlayScreen implements Screen {
       public Player getPlayer() {
             return player;
       }
-      public void addEnemy( Enemy enemy){
+
+      public void addDynamite(Dynamite dynamite) {
+            dynamites.add(dynamite);
+      }
+
+      public void deleteDynamite(Dynamite dynamite) {
+            dynamites.removeValue(dynamite, false);
+
+      }
+
+      public void addEnemy(Enemy enemy) {
             enemies.add(enemy);
       }
-      public void deleteEnemy(Enemy enemy){
+
+      public void deleteEnemy(Enemy enemy) {
             enemies.removeValue(enemy, false);
       }
-      public void deleteBullet(Bullet bullet){
+
+      public void deleteBullet(Bullet bullet) {
             bullets.removeValue(bullet, false);
-            
+
       }
- 
+
 }

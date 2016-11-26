@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.game.Sprites.Enemies.Cannon.BulletCannon;
 import com.mygdx.game.Sprites.Enemies.Enemy;
+import com.mygdx.game.Sprites.Player.Dynamite;
 
 /**
  *
@@ -34,6 +35,37 @@ public class WorldContactListener implements ContactListener {
             cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
             switch (cDef) {
+                        
+                       
+                  
+
+                  case AdventureGame.DYNAMITE_BIT | AdventureGame.ENEMY_BIT:
+                         if (fixA.getFilterData().categoryBits == AdventureGame.DYNAMITE_BIT) {
+                              ((Dynamite) fixA.getUserData()).setToDestroy();
+                              ((Enemy) fixB.getUserData()).hitByExplosion();
+                              
+
+                        } else {
+                              
+                              ((Dynamite) fixB.getUserData()).setToDestroy();
+                              ((Enemy) fixA.getUserData()).hitByExplosion();
+                        }
+                        break;
+
+                        
+                  case AdventureGame.DYNAMITE_BIT | AdventureGame.GROUND_BIT:
+                  case AdventureGame.DYNAMITE_BIT | AdventureGame.FLOOR_BIT:
+                        
+                        if (fixA.getFilterData().categoryBits == AdventureGame.DYNAMITE_BIT) {
+                              ((Dynamite) fixA.getUserData()).setToDestroy();
+                              
+
+                        } else {
+                              
+                              ((Dynamite) fixB.getUserData()).setToDestroy();
+                        }
+                        break;
+
 
                   case AdventureGame.BULLET_BIT | AdventureGame.GROUND_BIT:
                   case AdventureGame.BULLET_BIT | AdventureGame.FLOOR_BIT:
@@ -73,7 +105,7 @@ public class WorldContactListener implements ContactListener {
                    case AdventureGame.FLOOR_BIT | AdventureGame.ENEMYBULLET_BIT:
                    case AdventureGame.GROUND_BIT | AdventureGame.ENEMYBULLET_BIT:
                    
-                         System.out.println("hit");
+                         
                         if (fixA.getFilterData().categoryBits == AdventureGame.ENEMYBULLET_BIT) {
                               
                               ((Enemy) fixA.getUserData()).setDestroy();
@@ -142,7 +174,10 @@ public class WorldContactListener implements ContactListener {
                   case AdventureGame.FLOOR_BIT | AdventureGame.PLAYER_BIT:
                         Player.inFloor = true;
                         break;
-
+                        
+                       
+                        
+                  
             }
       }
 

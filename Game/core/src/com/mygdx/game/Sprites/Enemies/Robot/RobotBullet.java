@@ -76,7 +76,8 @@ public class RobotBullet extends Enemy {
 
             fdef.filter.maskBits = AdventureGame.GROUND_BIT
                     | AdventureGame.FLOOR_BIT
-                    | AdventureGame.PLAYER_BIT;
+                    | AdventureGame.PLAYER_BIT
+                    |AdventureGame.DYNAMITE_BIT;
             fdef.shape = shape;
 
             b2body.createFixture(fdef).setUserData(this);
@@ -120,4 +121,8 @@ public class RobotBullet extends Enemy {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
       }
 
+      @Override
+      public void hitByExplosion() {
+           setDestroy = true;
+      }
 }

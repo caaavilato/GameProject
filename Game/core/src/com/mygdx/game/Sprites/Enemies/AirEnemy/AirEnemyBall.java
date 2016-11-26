@@ -65,7 +65,8 @@ public class AirEnemyBall extends Enemy {
 
             fdef.filter.maskBits = AdventureGame.GROUND_BIT|
                                   AdventureGame.FLOOR_BIT|
-                                  AdventureGame.PLAYER_BIT;
+                                  AdventureGame.PLAYER_BIT
+                               |AdventureGame.DYNAMITE_BIT;
             fdef.shape = shape;
 
             b2body.setGravityScale(0.1f);
@@ -107,6 +108,10 @@ public class AirEnemyBall extends Enemy {
       @Override
       public void inRange() {
             
+      }
+      @Override
+      public void hitByExplosion() {
+           setDestroy = true;
       }
       
 }

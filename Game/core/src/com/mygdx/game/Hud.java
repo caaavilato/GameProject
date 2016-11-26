@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.Sprites.Player.Player;
 
 /**
  *
@@ -75,6 +76,7 @@ public class Hud implements Disposable {
             scoreLabel.setText(String.format("%06d", score));
       }
       public static void hit(){
+           
             lives --;
             livesLabel.setText(String.format("%02d", lives));
       }
