@@ -14,7 +14,8 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.AdventureGame;
-import com.mygdx.game.PlayScreen;
+
+import com.mygdx.game.Tools.PlayScreen.PlayScreen;
 import com.mygdx.game.Sprites.Enemies.Enemy;
 
 /**
@@ -112,9 +113,9 @@ public class AirEnemy extends Enemy {
       @Override
       public void update(float dt) {
             
-            if(destroyed)
+           if (destroyed || !b2body.isActive()) {
                   return;
-
+            }
             setPosition(b2body.getPosition().x - this.getWidth() / 2, b2body.getPosition().y - this.getHeight() / 2);
             
             
@@ -128,7 +129,7 @@ public class AirEnemy extends Enemy {
                   setRegion(moveBall.getKeyFrame(TimeState));
             } else {
                   if(TimeState == 0){
-                        screen.addEnemy( new AirEnemyBall(screen, this.getX(), this.getY()));
+                        screen.addEnemy( new AirEnemyBall(screen, this.getX() + 1 /AdventureGame.PPM, this.getY()));
                   }
                   if( !dropBall.isAnimationFinished(TimeState))
                    setRegion(dropBall.getKeyFrame(TimeState));
@@ -159,6 +160,11 @@ public class AirEnemy extends Enemy {
            lives = lives - 2;
            if(lives <= 0)
                  setDestroy = true;
+      }
+
+      @Override
+      public void hitWithPlayer() {
+            
       }
 
 }

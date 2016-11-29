@@ -22,8 +22,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.AdventureGame;
-import com.mygdx.game.Hud;
-import com.mygdx.game.PlayScreen;
+import com.mygdx.game.Tools.PlayScreen.PlayScreen;
+import com.mygdx.game.Tools.Screens.Hud;
+import com.mygdx.game.Tools.PlayScreen.PlayScreen1_1;
 
 /**
  *
@@ -42,7 +43,7 @@ public class Player extends Sprite {
       public static boolean hold;
       public static boolean hit;
 
-      private PlayScreen screen;
+      private static PlayScreen screen;
 
       public World world;
       public Body b2body;
@@ -69,12 +70,13 @@ public class Player extends Sprite {
       private boolean Tothrow;
 
       public static boolean runningRight;
+      public static boolean dead;
       private Vector2 dimension;
 
       private Array<TextureRegion> frames;
       private TextureRegion frame;
 
-      public Player(PlayScreen Screen) {
+      public Player(PlayScreen Screen, float x, float y) {
 
             this.screen = Screen;
             this.world = Screen.getWorld();
@@ -86,7 +88,7 @@ public class Player extends Sprite {
 
             dimension = new Vector2();
 
-            definePlayer();
+            definePlayer(x, y);
 
             setRegion(stand);
 
@@ -97,6 +99,7 @@ public class Player extends Sprite {
             shot = false;
             hold = false;
             hit = false;
+            dead = false;
 
             standingAnimation();
             runningAnimation();
@@ -378,7 +381,7 @@ public class Player extends Sprite {
       }
 
       private State getState() {
-            
+
             if (hit) {
                   return State.HIT;
             }
@@ -410,7 +413,6 @@ public class Player extends Sprite {
                   }
             }
 
-            
             if (crawl) {
                   if (shot) {
                         return State.CRAWLSHOT;
@@ -438,12 +440,12 @@ public class Player extends Sprite {
 
       }
 
-      public void definePlayer() {
+      public void definePlayer(float x, float y) {
 
             PolygonShape shape = new PolygonShape();
 
             BodyDef bdef = new BodyDef();
-            bdef.position.set(64 / AdventureGame.PPM, 64 / AdventureGame.PPM);
+            bdef.position.set(x, y);
             bdef.type = BodyDef.BodyType.DynamicBody;
 
             b2body = world.createBody(bdef);
@@ -456,10 +458,12 @@ public class Player extends Sprite {
             fdef.filter.categoryBits = AdventureGame.PLAYER_BIT;
             fdef.filter.maskBits = AdventureGame.FLOOR_BIT
                     | AdventureGame.GROUND_BIT
-                    | AdventureGame.BULLET_BIT
                     | AdventureGame.ENEMY_BIT
                     | AdventureGame.ENEMYBULLET_BIT
-                    | AdventureGame.ENEMYRANGE_BIT;
+                    | AdventureGame.ENEMYRANGE_BIT
+                    | AdventureGame.FINISH_BIT
+                    | AdventureGame.BOSS_BIT
+                    |AdventureGame.DAMAGEGROUND_BIT;
 
             fdef.friction = 1f;
             b2body.createFixture(fdef).setUserData(this);
@@ -492,8 +496,10 @@ public class Player extends Sprite {
                     | AdventureGame.GROUND_BIT
                     | AdventureGame.ENEMY_BIT
                     | AdventureGame.ENEMYBULLET_BIT
-                    | AdventureGame.ENEMYRANGE_BIT;
-
+                    | AdventureGame.ENEMYRANGE_BIT
+                    | AdventureGame.FINISH_BIT
+                    | AdventureGame.BOSS_BIT
+                    |AdventureGame.DAMAGEGROUND_BIT;
             fdef.friction = 1f;
             b2body.createFixture(fdef).setUserData(this);
 
@@ -525,7 +531,10 @@ public class Player extends Sprite {
                     | AdventureGame.GROUND_BIT
                     | AdventureGame.ENEMY_BIT
                     | AdventureGame.ENEMYBULLET_BIT
-                    | AdventureGame.ENEMYRANGE_BIT;
+                    | AdventureGame.ENEMYRANGE_BIT
+                    | AdventureGame.FINISH_BIT
+                    | AdventureGame.BOSS_BIT
+                    |AdventureGame.DAMAGEGROUND_BIT;
 
             fdef.friction = 2f;
             b2body.createFixture(fdef).setUserData(this);
@@ -539,7 +548,24 @@ public class Player extends Sprite {
             return this.TimeState;
       }
 
+      public PlayScreen getPlayScreen() {
+            return this.screen;
+      }
+
       public void hit() {
+
+            
+            if (inFloor) {
+                  b2body.applyLinearImpulse(AdventureGame.IMPULSE_H, b2body.getWorldCenter(), true);
+            }
+
+            hit = true;
+            AdventureGame.manager.get("sounds/player/Hit Sound Effect.mp3", Sound.class).play(2, 1, 0);
+            
+
+            Hud.hit();
+      }
+      public void hitbyBoss() {
 
             System.out.println(inFloor);
             if (inFloor) {
@@ -547,10 +573,12 @@ public class Player extends Sprite {
             }
 
             hit = true;
-            AdventureGame.manager.get("Hit Sound Effect.mp3", Sound.class).play(2, 1,0);
-            
-            
-            Hud.hit();
+            AdventureGame.manager.get("sounds/player/Hit Sound Effect.mp3", Sound.class).play(2, 1, 0);
+
+            Hud.hitbyBoss();
+      }
+      public static void playerDead(){
+            dead = true;
       }
 
 }

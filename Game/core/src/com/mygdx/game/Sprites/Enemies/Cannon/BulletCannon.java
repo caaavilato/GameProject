@@ -16,7 +16,8 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.AdventureGame;
-import com.mygdx.game.PlayScreen;
+
+import com.mygdx.game.Tools.PlayScreen.PlayScreen;
 import com.mygdx.game.Sprites.Enemies.Enemy;
 
 /**
@@ -96,9 +97,9 @@ public class BulletCannon extends Enemy {
 
       @Override
       public void update(float dt) {
-            if(destroyed)
+            if (destroyed || !b2body.isActive()) {
                   return;
-            
+            }
             this.setPosition(b2body.getPosition().x - this.getWidth() / 2, b2body.getPosition().y - this.getHeight() / 2);
 
             setRegion(animation.getKeyFrame(StateTimer));
@@ -129,6 +130,10 @@ public class BulletCannon extends Enemy {
       @Override
       public void hitByExplosion() {
            setDestroy = true;
+      }
+      @Override
+      public void hitWithPlayer() {
+            
       }
 
 }

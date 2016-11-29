@@ -20,8 +20,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.AdventureGame;
-import com.mygdx.game.PlayScreen;
+import com.mygdx.game.Tools.PlayScreen.PlayScreen1_1;
 import com.mygdx.game.Sprites.Enemies.Enemy;
+import com.mygdx.game.Tools.PlayScreen.PlayScreen;
 
 /**
  *
@@ -72,7 +73,7 @@ public class Dynamite extends Sprite {
 
             setBounds(x, y, 12 / AdventureGame.PPM, 4 / AdventureGame.PPM);
             defineDynamite();
-            AdventureGame.manager.get("Dynamite.mp3", Sound.class).play();
+            AdventureGame.manager.get("sounds/player/Dynamite.mp3", Sound.class).play();
 
       }
 
@@ -94,7 +95,8 @@ public class Dynamite extends Sprite {
 
             fdef.filter.maskBits = AdventureGame.GROUND_BIT
                     | AdventureGame.FLOOR_BIT
-                    | AdventureGame.ENEMY_BIT;
+                    | AdventureGame.ENEMY_BIT
+                    |AdventureGame.BOSS_BIT;
             fdef.shape = shape;
             
             b2body.createFixture(fdef).setUserData(this);

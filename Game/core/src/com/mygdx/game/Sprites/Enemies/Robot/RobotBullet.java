@@ -13,7 +13,8 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.AdventureGame;
-import com.mygdx.game.PlayScreen;
+import com.mygdx.game.Tools.PlayScreen.PlayScreen;
+
 import com.mygdx.game.Sprites.Enemies.Enemy;
 
 /*
@@ -84,13 +85,13 @@ public class RobotBullet extends Enemy {
 
             b2body.setGravityScale(0);
 
-            System.out.println(fireLeft);
+            
 
       }
 
       @Override
       public void update(float dt) {
-            if (destroyed) {
+            if (destroyed || !b2body.isActive()) {
                   return;
             }
 
@@ -124,5 +125,9 @@ public class RobotBullet extends Enemy {
       @Override
       public void hitByExplosion() {
            setDestroy = true;
+      }
+      @Override
+      public void hitWithPlayer() {
+            
       }
 }
