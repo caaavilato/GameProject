@@ -1,0 +1,173 @@
+Sprites.png
+size: 2048, 1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+AirEnemy
+  rotate: false
+  xy: 1137, 157
+  size: 663, 80
+  orig: 663, 80
+  offset: 0, 0
+  index: -1
+BallAirEnemy
+  rotate: false
+  xy: 294, 0
+  size: 166, 59
+  orig: 166, 59
+  offset: 0, 0
+  index: -1
+Boss
+  rotate: false
+  xy: 0, 392
+  size: 1748, 268
+  orig: 1748, 268
+  offset: 0, 0
+  index: -1
+Bullet
+  rotate: false
+  xy: 0, 0
+  size: 8, 2
+  orig: 8, 2
+  offset: 0, 0
+  index: -1
+Cannon
+  rotate: false
+  xy: 684, 237
+  size: 725, 39
+  orig: 725, 39
+  offset: 0, 0
+  index: -1
+CannonBullet
+  rotate: false
+  xy: 82, 0
+  size: 70, 14
+  orig: 70, 14
+  offset: 0, 0
+  index: -1
+Crawling
+  rotate: false
+  xy: 685, 87
+  size: 411, 42
+  orig: 411, 42
+  offset: 0, 0
+  index: -1
+DogB
+  rotate: false
+  xy: 0, 157
+  size: 559, 59
+  orig: 559, 59
+  offset: 0, 0
+  index: -1
+Dynamite
+  rotate: false
+  xy: 997, 0
+  size: 263, 70
+  orig: 263, 70
+  offset: 0, 0
+  index: -1
+Hit
+  rotate: false
+  xy: 8, 0
+  size: 33, 55
+  orig: 33, 55
+  offset: 0, 0
+  index: -1
+Holding
+  rotate: false
+  xy: 1543, 0
+  size: 283, 77
+  orig: 283, 77
+  offset: 0, 0
+  index: -1
+Jumping
+  rotate: false
+  xy: 152, 0
+  size: 142, 83
+  orig: 142, 83
+  offset: 0, 0
+  index: -1
+MachineGun
+  rotate: false
+  xy: 0, 313
+  size: 1041, 79
+  orig: 1041, 79
+  offset: 0, 0
+  index: -1
+MachineGunB
+  rotate: false
+  xy: 627, 0
+  size: 177, 31
+  orig: 177, 31
+  offset: 0, 0
+  index: -1
+Miner
+  rotate: false
+  xy: 559, 157
+  size: 578, 58
+  orig: 578, 58
+  offset: 0, 0
+  index: -1
+MinerPick
+  rotate: false
+  xy: 804, 0
+  size: 193, 34
+  orig: 193, 34
+  offset: 0, 0
+  index: -1
+MummyDog
+  rotate: false
+  xy: 0, 660
+  size: 1830, 132
+  orig: 1830, 132
+  offset: 0, 0
+  index: -1
+PlayerStanding
+  rotate: false
+  xy: 1096, 87
+  size: 503, 69
+  orig: 503, 69
+  offset: 0, 0
+  index: -1
+Robot
+  rotate: false
+  xy: 0, 237
+  size: 684, 76
+  orig: 684, 76
+  offset: 0, 0
+  index: -1
+RobotBullet
+  rotate: false
+  xy: 41, 0
+  size: 41, 21
+  orig: 41, 21
+  offset: 0, 0
+  index: -1
+Running
+  rotate: false
+  xy: 0, 87
+  size: 328, 70
+  orig: 328, 70
+  offset: 0, 0
+  index: -1
+ShootCrawling
+  rotate: false
+  xy: 1260, 0
+  size: 283, 46
+  orig: 283, 46
+  offset: 0, 0
+  index: -1
+Shooting
+  rotate: false
+  xy: 460, 0
+  size: 167, 87
+  orig: 167, 87
+  offset: 0, 0
+  index: -1
+Wheel
+  rotate: false
+  xy: 328, 87
+  size: 357, 50
+  orig: 357, 50
+  offset: 0, 0
+  index: -1

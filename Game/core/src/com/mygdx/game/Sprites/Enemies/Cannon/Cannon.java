@@ -11,8 +11,9 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.mygdx.game.AdventureGame;
-import com.mygdx.game.Hud;
-import com.mygdx.game.PlayScreen;
+import com.mygdx.game.Tools.PlayScreen.PlayScreen;
+import com.mygdx.game.Tools.Screens.Hud;
+
 import com.mygdx.game.Sprites.Enemies.Enemy;
 
 /**
@@ -70,9 +71,10 @@ public class Cannon extends Enemy {
       @Override
       public void update(float dt) {
             
-            if(destroyed)
-                  return;
             
+            if (destroyed || !b2body.isActive()) {
+                  return;
+            }
             TimeState += dt;
 
             setPosition(b2body.getPosition().x - this.getWidth() / 2, b2body.getPosition().y - this.getHeight() / 2);
@@ -121,6 +123,10 @@ public class Cannon extends Enemy {
            lives = lives - 2;
            if(lives <= 0)
                  setDestroy = true;
+      }
+      @Override
+      public void hitWithPlayer() {
+            
       }
 
 }

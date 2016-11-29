@@ -13,7 +13,8 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.AdventureGame;
-import com.mygdx.game.PlayScreen;
+
+import com.mygdx.game.Tools.PlayScreen.PlayScreen;
 import com.mygdx.game.Sprites.Enemies.Enemy;
 
 /**
@@ -33,6 +34,7 @@ public class AirEnemyBall extends Enemy {
             
             frames = new Array<TextureRegion>();
             
+            
             for (int i = 0; i <= 3; i++) {
                   frame = new TextureRegion(screen.getAtlas().findRegion("BallAirEnemy"), (i * 40), 0, 40, 41);
                   frames.add(frame);
@@ -41,6 +43,7 @@ public class AirEnemyBall extends Enemy {
             animation = new Animation(0.1f, frames, PlayMode.LOOP);
             
             setBounds(x,y,20/AdventureGame.PPM,20/AdventureGame.PPM);
+            b2body.setActive(true);
             
             TimeState = 0;
             
@@ -65,8 +68,8 @@ public class AirEnemyBall extends Enemy {
 
             fdef.filter.maskBits = AdventureGame.GROUND_BIT|
                                   AdventureGame.FLOOR_BIT|
-                                  AdventureGame.PLAYER_BIT
-                               |AdventureGame.DYNAMITE_BIT;
+                                  AdventureGame.PLAYER_BIT|
+                               AdventureGame.DYNAMITE_BIT;
             fdef.shape = shape;
 
             b2body.setGravityScale(0.1f);
@@ -80,9 +83,9 @@ public class AirEnemyBall extends Enemy {
       @Override
       public void update(float dt) {
             
-            if(destroyed)
+            if (destroyed || !b2body.isActive()) {
                   return;
-            
+            }
             
             this.setPosition(b2body.getPosition().x - this.getWidth() / 2, b2body.getPosition().y - this.getHeight() / 2);
        
@@ -102,7 +105,7 @@ public class AirEnemyBall extends Enemy {
 
       @Override
       public void hitByPlayer() {
-            
+            setDestroy = true;
       }
 
       @Override
@@ -112,6 +115,10 @@ public class AirEnemyBall extends Enemy {
       @Override
       public void hitByExplosion() {
            setDestroy = true;
+      }
+      @Override
+      public void hitWithPlayer() {
+            
       }
       
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="19" height="17" tilewidth="16" tileheight="16" nextobjectid="7">
+ <tileset firstgid="1" name="BossMap" tilewidth="16" tileheight="16" tilecount="288" columns="18">
+  <image source="BossMap.png" width="300" height="264"/>
+ </tileset>
+ <layer name="BackGround" width="19" height="17">
+  <data encoding="base64" compression="zlib">
+   eJytzIebyAUYwPEb7jjuDnfWbVkZ2WRmpJCdVUpCklnIjsoKlZ09irJHw4yMrIqmvcnOXkWi+jyP35/ged7P8z7P+zzvNzQkJCSMcNIRQSTpyUAUGclENDHEkpksZCWOtcSTjezkICe5SCCRJJJJIZU0cvMIechLvqCVnwI8SkEKUZgiPEZRilGcEpSkFKUpQ1keD1rlKE8FKlKJyjxBFapSjeo8SQ2e4mlqUovaQesZ6lCXetSnAQ1pxLM0pglNaUZznuN5WvBC0HqRlrxEK16mNW1oyyu041Xa8xod6EgnOtMlaHXldd6gG93pwZv0pBe96UNf+tGftxjAQN4OWu/wLoMYzBCGMoz3GM4IRvI+H/AhoxjNGMYGrXGMZwIfMZFJTGYKU5nGdGYwk1l8zCfMZk7Q+pTPmMs85rOAhSxiMUtYyjI+5wu+5CuWsyJorWQVq1nD18F9Hd+wng1sZBPfspktbGUb24Of7/ieH9jBTn7kJ37mF37lN3axmz3sZR/7ORC0DnKIwxzhKMc4zgl+5ySnOM0ZznKO8/zBhaB1kUtc5gpXucZ1bnCTW/zJX9zmDn9zl3+4F7Tu8y//ERJqCCOcdEQQSXoyEEVGMhFNDLGhD1qZ7SxkJY54spGdHOQkFwkkkkQyKaSSRu6g9TD9DzGamyA=
+  </data>
+ </layer>
+ <objectgroup name="Ground">
+  <object id="2" x="4" y="201" width="284" height="56"/>
+  <object id="5" x="260" y="4" width="28" height="208"/>
+  <object id="6" x="4" y="4" width="32" height="204"/>
+ </objectgroup>
+</map>

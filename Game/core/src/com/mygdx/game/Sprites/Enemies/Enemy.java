@@ -7,16 +7,19 @@ package com.mygdx.game.Sprites.Enemies;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.PlayScreen;
+import com.mygdx.game.Tools.PlayScreen.PlayScreen1_1;
+import com.mygdx.game.Tools.PlayScreen.PlayScreen;
 
 /**
  *
  * @author Camilo.Avila
  */
 public abstract class Enemy extends Sprite {
-
+      
+      private TextureRegion texture;
       protected World world;
       protected PlayScreen screen;
       public Body b2body;
@@ -30,22 +33,27 @@ public abstract class Enemy extends Sprite {
             this.screen = screen;
             setPosition(x, y);
             defineEnemy();
+            texture = new TextureRegion(screen.getAtlas().findRegion("AirEnemy"), 55 , 0, 55, 69);
             
-            
+            setRegion(texture);
             setDestroy = false;
             destroyed = false;
 
-            b2body.setActive(true);
+            b2body.setActive(false);
 
       }
 
       public void draw(Batch batch) {
-            if(!destroyed)
+            if(!destroyed && b2body.isActive())
             super.draw(batch);
+            
 
       }
       public void setDestroy(){
-            setDestroy = true;
+            this.setDestroy = true;
+      }
+      public  boolean setToDestroy(){
+            return setDestroy;
       }
      
 
@@ -55,6 +63,7 @@ public abstract class Enemy extends Sprite {
 
       public abstract void hitByPlayer();
       public abstract void hitByExplosion();
+      public abstract void hitWithPlayer();
       
       public abstract void inRange();
       

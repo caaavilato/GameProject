@@ -18,8 +18,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.AdventureGame;
-import com.mygdx.game.Hud;
-import com.mygdx.game.PlayScreen;
+import com.mygdx.game.Tools.Screens.Hud;
+import com.mygdx.game.Tools.PlayScreen.PlayScreen1_1;
+import com.mygdx.game.Tools.PlayScreen.PlayScreen;
 
 /**
  *
@@ -51,7 +52,7 @@ public class Bullet extends Sprite {
             setBounds(x, y, 8 / AdventureGame.PPM, 2 / AdventureGame.PPM);
 
             defineBullet();
-            AdventureGame.manager.get("GunSound.mp3", Sound.class).play();
+            AdventureGame.manager.get("sounds/player/GunSound.mp3", Sound.class).play();
             
 
       }
@@ -75,7 +76,8 @@ public class Bullet extends Sprite {
             fdef.filter.maskBits = AdventureGame.GROUND_BIT|
                                    AdventureGame.FLOOR_BIT|
                                    AdventureGame.PLAYER_BIT|
-                                   AdventureGame.ENEMY_BIT;
+                                   AdventureGame.ENEMY_BIT|
+                                    AdventureGame.BOSS_BIT;
               fdef.shape = shape;
             
             b2body.createFixture(fdef).setUserData(this);
